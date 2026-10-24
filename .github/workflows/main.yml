@@ -1,0 +1,39 @@
+
+name: Build BlueV
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git python3 make clang cmake ninja-build
+
+      - name: Install PS5 Payload SDK
+        run: |
+          wget -O /tmp/sdk.zip https://github.com/ps5-payload-dev/sdk/releases/latest/download/ps5-payload-sdk.zip
+          sudo apt-get install -y unzip
+          sudo unzip -o /tmp/sdk.zip -d /opt
+
+      - name: Build BlueV
+        run: |
+          make
+          mkdir -p output
+          cp build/bluev.elf output/
+
+      - name: Upload build
+        uses: actions/upload-artifact@v4
+        with:
+          name: BlueV-build
+          path: output/bluev.elf
