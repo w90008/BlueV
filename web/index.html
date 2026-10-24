@@ -1,10 +1,10 @@
 <!doctype html>
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BlueV</title>
+<title>BlueV - محمد خالد للشروحات</title>
 <style>
 :root{--bg:#f6f7f9;--card:#fff;--fg:#1c2024;--mut:#6b7480;--line:#e3e6ea;--acc:#2563eb;--ok:#15803d;--bad:#b91c1c}
 @media (prefers-color-scheme:dark){:root{--bg:#14161a;--card:#1d2026;--fg:#e8eaed;--mut:#9aa3ad;--line:#2c313a;--acc:#6ea0ff;--ok:#4ade80;--bad:#f87171}}
@@ -38,31 +38,31 @@ pre{margin:0;max-height:300px;overflow:auto;font:12px/1.5 ui-monospace,monospace
 </head>
 <body>
 <main>
-<h1>BlueV <span class="mut" style="font-weight:400;font-size:14px">Bluetooth audio for PS5</span></h1>
+<h1>BlueV <span class="mut" style="font-weight:400;font-size:14px">صوت بلوتوث لجهاز PS5</span><div class="mut" style="font-size:13px;font-weight:400">محمد خالد للشروحات</div></h1>
 
 <div class="card" id="radioCard">
   <div class="row" style="margin-bottom:6px">
-    <b class="grow">Bluetooth adapter</b>
-    <span id="radioBadge" class="badge">Radio off</span>
+    <b class="grow">محول البلوتوث</b>
+    <span id="radioBadge" class="badge">البلوتوث متوقف</span>
   </div>
   <label class="row"><input type="radio" name="ad" value="internal" checked onchange="adapterChanged(true)">
-    <span class="grow">Internal (the console's own chip)</span></label>
+    <span class="grow">داخلي (الشريحة المدمجة في الجهاز)</span></label>
   <label class="row"><input type="radio" name="ad" value="external" onchange="adapterChanged(true)">
-    <span class="grow">External (USB adapter)</span>
+    <span class="grow">خارجي (محول USB)</span>
     <select id="extDev" disabled></select>
-    <button id="btnFind" onclick="findAdapters()" disabled>Find</button></label>
+    <button id="btnFind" onclick="findAdapters()" disabled>بحث</button></label>
   <div class="row" style="margin-top:6px">
-    <button id="btnStart" class="pri" onclick="startRadio()">Start</button>
-    <button id="btnRadioOff" onclick="post('radio/off')" disabled>Turn off</button>
+    <button id="btnStart" class="pri" onclick="startRadio()">تشغيل</button>
+    <button id="btnRadioOff" onclick="post('radio/off')" disabled>إيقاف البلوتوث</button>
     <span id="radioNote" class="grow mut"></span>
   </div>
   <div id="internalNote" class="warn">
-    <b>Before you start the internal Bluetooth</b>
-    <div class="mut" style="margin-top:4px">The console's own Bluetooth chip is shared with your gamepad. While BlueV is running, a gamepad that is switched off and on again, or reconnects, can end up connected but without input until the console is restarted.</div>
+    <b>قبل تشغيل البلوتوث الداخلي</b>
+    <div class="mut" style="margin-top:4px">تُستخدم شريحة البلوتوث المدمجة في الجهاز أيضًا مع يد التحكم. أثناء تشغيل BlueV، قد تتصل يد التحكم بعد إيقافها وتشغيلها مجددًا أو إعادة اتصالها، لكن دون استجابة للأزرار حتى إعادة تشغيل الجهاز.</div>
     <ul class="mut" style="margin:6px 0 0 18px;padding:0">
-      <li>Switch the gamepad on <b style="color:inherit">now</b>, before pressing Start.</li>
-      <li>Do not switch it off or on, and do not unplug or plug its cable, while the radio is on.</li>
-      <li>Nothing touches the Bluetooth chip until you press Start. Turning the radio off does not undo the problem.</li>
+      <li>شغّل يد التحكم <b style="color:inherit">الآن</b> قبل الضغط على تشغيل.</li>
+      <li>لا توقف يد التحكم ولا تشغّلها مجددًا، ولا تفصل كابلها أو توصله أثناء تشغيل البلوتوث.</li>
+      <li>لن يتم التعامل مع شريحة البلوتوث حتى تضغط على تشغيل. إيقاف البلوتوث لا يعالج المشكلة إذا حدثت.</li>
     </ul>
   </div>
 </div>
@@ -71,24 +71,24 @@ pre{margin:0;max-height:300px;overflow:auto;font:12px/1.5 ui-monospace,monospace
   <div class="row">
     <span id="state" class="badge">...</span>
     <span id="msg" class="grow mut"></span>
-    <button id="btnDisc" onclick="post('disconnect')" disabled>Disconnect</button>
-    <button id="btnStop" onclick="stopPayload()">Stop BlueV</button>
+    <button id="btnDisc" onclick="post('disconnect')" disabled>قطع الاتصال</button>
+    <button id="btnStop" onclick="stopPayload()">إيقاف BlueV</button>
   </div>
   <div id="stream" class="mut" style="margin-top:8px"></div>
 </div>
 
 <div class="card">
   <div class="row" style="margin-bottom:6px">
-    <b class="grow">Devices</b>
-    <button id="btnScan" class="pri" onclick="post('scan')">Scan</button>
+    <b class="grow">الأجهزة</b>
+    <button id="btnScan" class="pri" onclick="post('scan')">بحث عن الأجهزة</button>
   </div>
-  <div id="devs" class="mut">No devices yet. Put the device in pairing mode and press Scan.</div>
+  <div id="devs" class="mut">لا توجد أجهزة حتى الآن. ضع الجهاز في وضع الاقتران ثم اضغط على «بحث عن الأجهزة».</div>
 </div>
 
 <div class="card">
   <div class="row">
-    <b class="grow">Log</b>
-    <button id="btnLog" onclick="toggleLog()">Show log</button>
+    <b class="grow">السجل</b>
+    <button id="btnالسجل" onclick="toggleالسجل()">عرض السجل</button>
   </div>
   <pre id="log" hidden style="margin-top:10px"></pre>
 </div>
@@ -100,15 +100,15 @@ function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp
 function post(cmd,addr){
   var u='/api/'+cmd+(addr?'?addr='+encodeURIComponent(addr):'');
   fetch(u,{method:'POST'}).then(function(r){return r.json()}).then(function(j){
-    if(!j.ok)$('msg').textContent='Error: '+j.message;
+    if(!j.ok)$('msg').textContent='خطأ: '+j.message;
     refresh();
-  }).catch(function(){$('msg').textContent='Request failed'});
+  }).catch(function(){$('msg').textContent='فشل الطلب'});
 }
 function logShown(){return !$('log').hidden}
-function toggleLog(){
+function toggleالسجل(){
   var p=$('log'),show=p.hidden;
   p.hidden=!show;
-  $('btnLog').textContent=show?'Hide log':'Show log';
+  $('btnالسجل').textContent=show?'إخفاء السجل':'عرض السجل';
   if(show)p.scrollTop=p.scrollHeight;
   try{localStorage.setItem('bluev-log',show?'1':'0')}catch(e){}
 }
@@ -123,15 +123,15 @@ var VENDORS={0x0a12:'CSR',0x0bda:'Realtek',0x8087:'Intel',0x0cf3:'Qualcomm Ather
   0x1286:'Marvell',0x04e8:'Samsung',0x0e8d:'MediaTek',0x1131:'Integrated System Solution',0x0a8d:'Motorola'};
 function real(t){return t&&!/^(product|vendor) 0x/.test(t)}
 function hex4(n){return ('000'+n.toString(16)).slice(-4)}
-// a name a person can read: what the adapter says about itself, else its maker
+// اسم واضح للمستخدم: الاسم الذي يعرّف به المحول نفسه، وإلا فاسم الشركة المصنّعة
 function adapterName(a){
   if(real(a.product))return a.product;
-  var maker=real(a.vendor)?a.vendor:(VENDORS[a.vid]||'Unknown maker');
-  return maker+' Bluetooth adapter';
+  var maker=real(a.vendor)?a.vendor:(VENDORS[a.vid]||'شركة غير معروفة');
+  return maker+' محول البلوتوث';
 }
 function findAdapters(){
   fetch('/api/adapters').then(function(r){return r.json()}).then(function(j){
-    // Bluetooth class (e0/01/01) or vendor specific; gamepads, drives and so on stay out
+    // فئة البلوتوث (e0/01/01) أو فئة خاصة بالشركة؛ تُستبعد أيدي التحكم ومحركات التخزين وغيرها
     var list=j.external.filter(function(a){return a.class===224||a.class===255});
     var sel=$('extDev'),seen={};
     sel.innerHTML=list.map(function(a){
@@ -139,45 +139,45 @@ function findAdapters(){
       seen[n]=(seen[n]||0)+1;
       return '<option value="'+esc(a.device)+'">'+esc(n+(seen[n]>1?' #'+seen[n]:'')+' ('+hex4(a.vid)+':'+hex4(a.pid)+', '+a.device+')')+'</option>';
     }).join('');
-    $('radioNote').textContent=list.length?'':'No Bluetooth adapter found in the USB ports.';
-  }).catch(function(){$('radioNote').textContent='Request failed'});
+    $('radioNote').textContent=list.length?'':'No محول البلوتوث found in the USB ports.';
+  }).catch(function(){$('radioNote').textContent='فشل الطلب'});
 }
 function startRadio(){
   var ext=document.querySelector('input[name=ad]:checked').value==='external';
-  if(ext&&!$('extDev').value){$('radioNote').textContent='Choose a USB adapter first.';return}
+  if(ext&&!$('extDev').value){$('radioNote').textContent='اختر محول USB أولًا.';return}
   var u='/api/radio/on?adapter='+(ext?'external&dev='+encodeURIComponent($('extDev').value):'internal');
   fetch(u,{method:'POST'}).then(function(r){return r.json()}).then(function(j){
-    $('radioNote').textContent=j.ok?'':'Error: '+j.message;
+    $('radioNote').textContent=j.ok?'':'خطأ: '+j.message;
     refresh();
-  }).catch(function(){$('radioNote').textContent='Request failed'});
+  }).catch(function(){$('radioNote').textContent='فشل الطلب'});
 }
 function stopPayload(){
-  if(!confirm('Stop BlueV? The Bluetooth controller is released. Send the payload again or use the launcher to start it.'))return;
+  if(!confirm('إيقاف BlueV? The Bluetooth controller is released. Send the payload again or use the launcher to start it.'))return;
   fetch('/api/quit',{method:'POST'}).catch(function(){});
   stopped=true;
   $('state').textContent='Stopped';
   $('state').className='badge';
-  $('msg').textContent='BlueV has been stopped.';
+  $('msg').textContent='تم إيقاف BlueV.';
   $('btnDisc').disabled=true;$('btnScan').disabled=true;$('btnStop').disabled=true;$('btnStart').disabled=true;$('btnRadioOff').disabled=true;
 }
 function refresh(){
   if(stopped)return;
   fetch('/api/status').then(function(r){return r.json()}).then(function(s){
     state=s.state;
-    var b=$('state'); b.textContent=({idle:'Idle',scanning:'Scanning',connecting:'Connecting',streaming:'Streaming'})[s.state]||s.state;
+    var b=$('state'); b.textContent=({idle:'خامل',scanning:'جارٍ البحث',connecting:'جارٍ الاتصال',streaming:'جارٍ بث الصوت'})[s.state]||s.state;
     b.className='badge '+s.state;
     $('msg').textContent=s.message;
     radioOn=!!(s.radio&&s.radio.on);
-    if(radioOn){   // show which adapter is in use, not the last thing that was clicked
+    if(radioOn){   // إظهار المحول المستخدم فعليًا، وليس آخر خيار تم النقر عليه
       var ext_on=s.radio.adapter==='external';
       document.querySelector('input[name=ad][value='+(ext_on?'external':'internal')+']').checked=true;
       if(ext_on&&s.radio.device){
         var sel=$('extDev'),found=false;
         for(var o=0;o<sel.options.length;o++)if(sel.options[o].value===s.radio.device){sel.selectedIndex=o;found=true}
-        if(!found){var opt=document.createElement('option');opt.value=s.radio.device;opt.textContent='USB Bluetooth adapter';sel.appendChild(opt);sel.value=s.radio.device;if(!listedOnce){listedOnce=true;findAdapters()}}
+        if(!found){var opt=document.createElement('option');opt.value=s.radio.device;opt.textContent='USB محول البلوتوث';sel.appendChild(opt);sel.value=s.radio.device;if(!listedOnce){listedOnce=true;findAdapters()}}
       }
     }
-    $('radioBadge').textContent=radioOn?(s.radio.adapter==='external'?'External on':'Internal on'):'Radio off';
+    $('radioBadge').textContent=radioOn?(s.radio.adapter==='external'?'البلوتوث الخارجي يعمل':'البلوتوث الداخلي يعمل'):'البلوتوث متوقف';
     $('radioBadge').className='badge '+(radioOn?'streaming':'');
     var ext=document.querySelector('input[name=ad]:checked').value==='external';
     $('btnStart').disabled=radioOn||s.state!=='idle';
@@ -187,9 +187,9 @@ function refresh(){
     $('btnDisc').disabled=!radioOn||(s.state==='idle'||s.state==='scanning');
     $('btnScan').disabled=!radioOn||(s.state!=='idle');
     $('stream').textContent=(s.state==='streaming')
-      ? (s.peer.name||s.peer.addr)+' · '+s.stream.rate+' Hz · '+s.stream.pps+' packets/s · queue '+s.stream.queue_ms+' ms'
+      ? (s.peer.name||s.peer.addr)+' · '+s.stream.rate+' هرتز · '+s.stream.pps+' حزمة/ثانية · زمن الانتظار '+s.stream.queue_ms+' مللي ثانية'
       : '';
-  }).catch(function(){$('state').textContent='no connection'});
+  }).catch(function(){$('state').textContent='لا يوجد اتصال'});
   fetch('/api/devices').then(function(r){return r.json()}).then(drawDevs).catch(function(){});
   fetch('/api/log?since='+since).then(function(r){return r.json()}).then(function(j){
     since=j.next;
@@ -203,18 +203,18 @@ function drawDevs(list){
   el.className='';
   el.innerHTML=list.map(function(d){
     var tags=[];
-    if(d.connected)tags.push('connected');
-    if(d.bonded)tags.push('paired');
-    if(d.other)tags.push('may not be an audio device');
-    var sig=d.rssi>-128?(' · '+d.rssi+' dBm'):'';
-    return '<div class="dev row"><div class="grow"><div class="name">'+esc(d.name||'(unnamed)')+'</div>'+
+    if(d.connected)tags.push('متصل');
+    if(d.bonded)tags.push('مقترن');
+    if(d.other)tags.push('قد لا يكون جهازًا صوتيًا');
+    var sig=d.rssi>-128?(' · '+d.rssi+' ديسيبل/ملي واط'):'';
+    return '<div class="dev row"><div class="grow"><div class="name">'+esc(d.name||'(بلا اسم)')+'</div>'+
       '<div class="mut">'+esc(d.addr)+sig+(tags.length?' · '+tags.join(', '):'')+'</div></div>'+
-      '<button class="pri" '+(idle?'':'disabled')+' onclick="post(\'connect\',\''+d.addr+'\')">Connect</button>'+
-      (d.bonded?'<button '+(idle?'':'disabled')+' onclick="if(confirm(\'Forget this pairing?\'))post(\'forget\',\''+d.addr+'\')">Forget</button>':'')+
+      '<button class="pri" '+(idle?'':'disabled')+' onclick="post(\'connect\',\''+d.addr+'\')">اتصال</button>'+
+      (d.bonded?'<button '+(idle?'':'disabled')+' onclick="if(confirm(\'هل تريد نسيان هذا الاقتران؟\'))post(\'forget\',\''+d.addr+'\')">إلغاء الاقتران</button>':'')+
       '</div>';
   }).join('');
 }
-try{if(localStorage.getItem('bluev-log')==='1')toggleLog()}catch(e){}
+try{if(localStorage.getItem('bluev-log')==='1')toggleالسجل()}catch(e){}
 adapterChanged(); refresh(); setInterval(refresh,1500);
 </script>
 </body>
